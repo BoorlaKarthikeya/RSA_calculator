@@ -25,9 +25,9 @@ function calculateRSA() {
 
     const plaintext = document.getElementById("plaintext").value;
     const encodedText = encode(plaintext, n, e);
-    document.getElementById("ciphertext").textContent = encodedText;
+    document.getElementById("ciphertext").textContent = encodedText.text;
 
-    const decodedText = decode(encodedText, n, e, d);
+    const decodedText = decode(encodedText.code, n, e, d);
 
     document.getElementById("decoded-plaintext").textContent = decodedText;
 }
@@ -44,14 +44,37 @@ function isPrime(number) {
     return true;
 }
 
+// function encode(plaintext, n, e) {
+//     let encodedText = "";
+//     for (let i = 0; i < plaintext.length; i++) {
+//         const charCode = plaintext.charCodeAt(i);
+//         const encrypted = modPow(charCode, e, n);
+//         encodedText += encrypted.toString() + " ";
+//     }
+//     return encodedText.trim();
+// }
+// function encode(plaintext, n, e) {
+//     let encodedText = "";
+//     for (let i = 0; i < plaintext.length; i++) {
+//         const charCode = plaintext.charCodeAt(i);
+//         const encrypted = modPow(charCode, e, n);
+//         const encryptedChar = String.fromCharCode(encrypted);
+//         encodedText += encryptedChar;
+//     }
+//     return encodedText;
+// }
+
+
 function encode(plaintext, n, e) {
     let encodedText = "";
+    let encodedTextascii = "";
     for (let i = 0; i < plaintext.length; i++) {
         const charCode = plaintext.charCodeAt(i);
         const encrypted = modPow(charCode, e, n);
+        encodedTextascii += String.fromCharCode(encrypted);
         encodedText += encrypted.toString() + " ";
     }
-    return encodedText.trim();
+    return { code: encodedText.trim(), text: encodedTextascii };
 }
 
 function decode(ciphertext, n, e, d) {
